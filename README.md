@@ -1,4 +1,4 @@
-# AnalizadorTecnicoComp
+# Trabajos Compiladores
 
 Trabajos de la materia **Compiladores**. Cada proyecto va en su propia carpeta.
 

@@ -2,25 +2,6 @@
 
 Analizador léxico para PHP
 
-Reconoce:
-
-- **Etiquetas**: `<?php`, `<?=`, `?>`
-- **Palabras reservadas** de PHP (`abstract`, `class`, `function`, `if`, `elseif`, `foreach`, `match`, `fn`, `try`, `catch`, `namespace`, `use`, etc.) sin distinguir mayúsculas, como en PHP (`IF`, `If` e `if` son el mismo token)
-- **Constantes**: `true`, `false`, `null`
-- **Variables** (`$nombre`) e **identificadores**
-- **Números**: enteros decimales, hexadecimales (`0x1F`), binarios (`0b1010`), octales (`0o17`), con separador `_` (`1_000`), y reales (`3.14`, `.5`, `1.5e3`)
-- **Cadenas** con comillas simples y dobles
-- **Operadores** aritméticos, de asignación, comparación (`===`, `!==`, `<=>`), lógicos, bit a bit, `??`, `??=`, `->`, `?->`, `=>`, `::`, `...`
-- **Comentarios** `//`, `#` y `/* */`
-- **Errores léxicos**: variables inválidas (`$1malo`), identificadores inválidos (`9abc`) y caracteres desconocidos
-
-## Uso
-
-```
-python3 php_lexer.py              # analiza programa.php
-python3 php_lexer.py archivo.php  # analiza otro archivo
-```
-
 ## Output del programa
 
 ```

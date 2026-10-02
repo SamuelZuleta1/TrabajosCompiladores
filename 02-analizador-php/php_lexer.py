@@ -501,6 +501,10 @@ def t_bad_VARIABLE(t):
     r'\$\d[a-zA-Z0-9_]*'
     print ("Lexical error: variable invalida '" + t.value + "' en linea " + str(t.lexer.lineno))
 
+def t_ESPACIO_DESPUES_DE_VARIABLE(t):
+    r'\$[ \t]+'
+    print("Error léxico: espacio después del símbolo '$' en línea " + str(t.lexer.lineno))
+
 def t_VARIABLE(t):
     r'\$[a-zA-Z_][a-zA-Z0-9_]*'
     return t

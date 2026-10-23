@@ -3,14 +3,10 @@ import os
 import re
 import sys
 
-# lista de tokens
 tokens = (
-    # etiquetas de apertura y cierre
     'OPEN_TAG',
     'OPEN_TAG_ECHO',
     'CLOSE_TAG',
-
-    # palabras reservadas
     'ABSTRACT',
     'AND',
     'ARRAY',
@@ -79,12 +75,9 @@ tokens = (
     'WHILE',
     'XOR',
     'YIELD',
-    # constantes
     'TRUE',
     'FALSE',
     'NULL',
-
-    # operadores aritméticos
     'PLUS',
     'MINUS',
     'TIMES',
@@ -93,7 +86,6 @@ tokens = (
     'POWER',
     'INCREMENT',
     'DECREMENT',
-    # operadores de asignación
     'EQUAL',
     'PLUSEQUAL',
     'MINUSEQUAL',
@@ -108,7 +100,6 @@ tokens = (
     'XOREQUAL',
     'SHIFTLEFTEQUAL',
     'SHIFTRIGHTEQUAL',
-    # comparación
     'ISEQUAL',
     'IDENTICAL',
     'NOTEQUAL',
@@ -118,18 +109,15 @@ tokens = (
     'GREATER',
     'GREATEREQUAL',
     'SPACESHIP',
-    # lógicos
     'LAND',
     'LOR',
     'NOT',
-    # bit a bit
     'AMPERSAND',
     'PIPE',
     'CARET',
     'TILDE',
     'SHIFTLEFT',
     'SHIFTRIGHT',
-    # otros operadores
     'CONCAT',
     'COALESCE',
     'QUESTION',
@@ -141,7 +129,6 @@ tokens = (
     'ELLIPSIS',
     'BACKSLASH',
     'AT',
-    # agrupación y puntuación
     'LPAREN',
     'RPAREN',
     'LBRACKET',
@@ -150,8 +137,6 @@ tokens = (
     'RBRACE',
     'SEMICOLON',
     'COMMA',
-
-    # otros
     'VARIABLE',
     'ID',
     'INTEGER',
@@ -159,7 +144,6 @@ tokens = (
     'STRING',
 )
 
-# Regular expressions rules for a simple tokens
 t_PLUS      = r'\+'
 t_MINUS     = r'-'
 t_TIMES     = r'\*'
@@ -187,7 +171,6 @@ t_RBRACE    = r'\}'
 t_SEMICOLON = r';'
 t_COMMA     = r','
 
-# etiquetas (van primero para que '<?php' no se lea como '<' y '?')
 def t_OPEN_TAG(t):
     r'<\?php\b'
     return t
@@ -200,7 +183,6 @@ def t_CLOSE_TAG(t):
     r'\?>'
     return t
 
-# comentarios (antes de los operadores para que '//' no sea DIVIDE)
 def t_comments(t):
     r'/\*(.|\n)*?\*/'
     t.lexer.lineno += t.value.count('\n')
@@ -211,7 +193,6 @@ def t_comments_C99(t):
 def t_comments_shell(t):
     r'\#((?!\?>).)*'
 
-# palabras reservadas (en PHP no distinguen mayúsculas, ver reflags abajo)
 def t_ABSTRACT(t):
     r'abstract\b'
     return t
@@ -496,7 +477,6 @@ def t_NULL(t):
     r'null\b'
     return t
 
-# variables: $nombre
 def t_bad_VARIABLE(t):
     r'\$\d[a-zA-Z0-9_]*'
     print ("Lexical error: variable invalida '" + t.value + "' en linea " + str(t.lexer.lineno))
@@ -509,13 +489,11 @@ def t_VARIABLE(t):
     r'\$[a-zA-Z_][a-zA-Z0-9_]*'
     return t
 
-# cadenas con comillas simples y dobles
 def t_STRING(t):
     r'\'([^\'\\]|\\(.|\n))*\'|"([^"\\]|\\(.|\n))*"'
     t.lexer.lineno += t.value.count('\n')
     return t
 
-# números (FLOAT antes que INTEGER para que 3.14 no se parta)
 def t_FLOAT(t):
     r'(\d[\d_]*)?\.\d[\d_]*([eE][+-]?\d+)?|\d[\d_]*[eE][+-]?\d+'
     t.value = float(t.value.replace('_', ''))
@@ -534,7 +512,6 @@ def t_ID(t):
     r'[a-zA-Z_][a-zA-Z0-9_]*'
     return t
 
-# operadores de varios caracteres (de mayor a menor longitud)
 def t_POWEREQUAL(t):
     r'\*\*='
     return t
@@ -685,7 +662,6 @@ def test(data, lexer):
             break
         print (tok)
 
-# las palabras reservadas de PHP no distinguen mayúsculas (IF, If, if)
 lexer = lex.lex(reflags=int(re.VERBOSE | re.IGNORECASE))
 
 
@@ -693,11 +669,9 @@ if __name__ == '__main__':
     if (len(sys.argv) > 1):
         fin = sys.argv[1]
     else:
-        # se busca junto al script, sin importar desde dónde se ejecute
         fin = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'programa.php')
     f = open(fin, 'r')
     data = f.read()
     print (data)
     lexer.input(data)
     test(data, lexer)
-    #input()

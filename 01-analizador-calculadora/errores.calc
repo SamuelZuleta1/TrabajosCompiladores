@@ -1,12 +1,94 @@
+// ===== Lineas correctas (no deben dar error) =====
 let x = 5;
-let = 3;
-y = 2 + * 4;
-z = (1 + 2;
-print(x);
-w = 3 3;
+let y=10.5;
+z=x+y*2;
+// comentario de una linea
+/* comentario de bloque */
+/* comentario de bloque
+   en varias lineas */
+total = x + 1; // comentario al final de la linea
+suma = x /* comentario en medio */ + y;
+
+// ===== Errores lexicos =====
 a = 7 @ 2;
 b = 3abc + 1;
 c = x # 2;
+d = 3,5 + 1;
+f = .5 * 2;
+g = $total + 1;
+h = x & y;
+nombre = "hola";
+k = 2 ¿ 3;
+
+// ===== Mala digitacion de palabras reservadas =====
+raiz = sqtr(16);
+prnt(x);
+Let w = 4;
+lett v = 2;
+iff (x > y) then x = 1;
+if (x > y) thn x = 1;
+if (x > y) then x = 1 esle x = 2;
+val = expp(1);
+
+// ===== Falta o sobra ; =====
 let m = 4
 n = m + 1;
-q = 1
+p = 2;;
+q = 3;
+;r = 4;
+s = 1 + 2 ;;
+
+// ===== Mala declaracion de variables =====
+let = 3;
+let 9 = 3;
+let x == 5;
+let x;
+let x y = 2;
+let let = 1;
+let pi = 3.14;
+5 = x;
+x + 1 = 5;
+let x = ;
+
+// ===== Espacios donde no deben ir =====
+t = 1 0 + 2;
+u = sq rt(9);
+pr int(x);
+l et j = 1;
+cmp = x < = y;
+igual = x = = y;
+dif = x ! = y;
+
+// ===== Sin espacios donde si deben ir =====
+letk = 7;
+letk2 = 1;
+if(x>y)thenx = 1;
+w2 = 10mod3;
+
+// ===== Errores en expresiones =====
+e1 = 2 + * 4;
+e2 = (1 + 2;
+e3 = 1 + 2);
+e4 = 3 3;
+e5 = x +;
+e6 = * x;
+e7 = ();
+e8 = sqrt();
+e9 = sqrt 16;
+e10 = 2 ^ ^ 3;
+e11 = x < y < 2;
+print x;
+print();
+
+// ===== Condicional mal formado =====
+if x > y then max = x;
+if (x > y) max = x;
+if (x > y) then;
+if (x > y) then max = x else;
+if () then x = 1;
+
+// ===== Falta ; al final y comentario sin cerrar =====
+fin = 1
+/* este comentario nunca se cierra
+otro = 2;
+

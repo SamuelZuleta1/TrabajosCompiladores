@@ -39,10 +39,6 @@ def p_statement(p):
     '''
     pass
 
-def p_statement_empty(p):
-    'statement : SEMICOLON'
-    pass
-
 def p_statement_error(p):
     'statement : error SEMICOLON'
     p.parser.errok()
@@ -190,7 +186,10 @@ def p_error(p):
             else:
                 linea = calc_lexer.lexer.lineno
             lineas_error.append(linea)
-            print ("ERROR SINTACTICO EN LA LINEA: " + str(linea))
+            if ultimo_token is not None and ultimo_token.type != 'SEMICOLON':
+                print ("ERROR SINTACTICO EN LA LINEA " + str(linea) + " FALTA ; AL FINAL DEL ARCHIVO")
+            else:
+                print ("ERROR SINTACTICO EN LA LINEA: " + str(linea))
     else:
         raise Exception('syntax', 'error')
 

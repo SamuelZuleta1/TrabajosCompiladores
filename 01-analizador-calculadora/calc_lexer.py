@@ -139,6 +139,14 @@ def t_comments(t):
     r'/\*(.|\n)*?\*/'
     t.lexer.lineno += t.value.count('\n')
 
+def t_comments_unclosed(t):
+    r'/\*(.|\n)*'
+    global errores_lexicos
+    errores_lexicos += 1
+    lineas_error_lexico.append(t.lexer.lineno)
+    print ("Lexical error: comentario sin cerrar en linea " + str(t.lexer.lineno))
+    t.lexer.lineno += t.value.count('\n')
+
 def t_comments_C99(t):
     r'//.*'
 

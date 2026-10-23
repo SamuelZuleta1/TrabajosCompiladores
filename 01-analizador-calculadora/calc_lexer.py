@@ -1,16 +1,15 @@
 import ply.lex as lex
 import sys
 
-# lista de tokens
+errores_lexicos = 0
+lineas_error_lexico = []
+
 tokens = (
-    # funciones matemáticas
     'SQRT',
     'EXP',
-    # constantes
     'PI',
     'E',
     'ANS',
-    # control y asignación
     'LET',
     'MOD',
     'IF',
@@ -18,7 +17,6 @@ tokens = (
     'ELSE',
     'PRINT',
 
-    # operadores aritméticos
     'PLUS',
     'MINUS',
     'TIMES',
@@ -26,7 +24,6 @@ tokens = (
     'POWER',
     'PERCENT',
     'EQUAL',
-    # comparación
     'LESS',
     'LESSEQUAL',
     'GREATER',
@@ -34,17 +31,14 @@ tokens = (
     'NOTEQUAL',
     'ISEQUAL',
     'NOT',
-    # agrupación y puntuación
     'LPAREN',
     'RPAREN',
     'SEMICOLON',
 
-    # otros
     'ID',
     'NUMBER',
 )
 
-# Regular expressions rules for a simple tokens
 t_PLUS      = r'\+'
 t_MINUS     = r'-'
 t_TIMES     = r'\*'
@@ -105,6 +99,9 @@ def t_E(t):
 
 def t_bad_ID(t):
     r'\d+[a-zA-Z_][a-zA-Z0-9_]*'
+    global errores_lexicos
+    errores_lexicos += 1
+    lineas_error_lexico.append(t.lexer.lineno)
     print ("Lexical error: identificador invalido '" + t.value + "' en linea " + str(t.lexer.lineno))
 
 def t_NUMBER(t):
@@ -146,7 +143,10 @@ def t_comments_C99(t):
     r'//.*'
 
 def t_error(t):
-    print ("Lexical error: " + str(t.value[0]))
+    global errores_lexicos
+    errores_lexicos += 1
+    lineas_error_lexico.append(t.lexer.lineno)
+    print ("Lexical error: '" + str(t.value[0]) + "' en linea " + str(t.lexer.lineno))
     t.lexer.skip(1)
 
 def test(data, lexer):
@@ -170,4 +170,3 @@ if __name__ == '__main__':
     print (data)
     lexer.input(data)
     test(data, lexer)
-    #input()

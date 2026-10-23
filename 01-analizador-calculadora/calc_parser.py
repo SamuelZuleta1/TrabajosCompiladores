@@ -1,3 +1,7 @@
+
+
+# python3 calc_parser.py errores.calc
+
 import ply.yacc as yacc
 from calc_lexer import tokens
 import calc_lexer
@@ -207,12 +211,9 @@ if __name__ == '__main__':
     data = f.read()
     #print (data)
     parser.parse(data, lexer=calc_lexer.lexer, tokenfunc=obtener_token, tracking=True)
-    if errores == 0 and calc_lexer.errores_lexicos == 0:
+    if errores == 0:
         print("Amiguito, tengo el placer de informar que Tu parser reconocio correctamente todo")
     else:
-        print("TOTAL DE ERRORES LEXICOS: " + str(calc_lexer.errores_lexicos))
-        if calc_lexer.errores_lexicos > 0:
-            print("LINEAS CON ERRORES LEXICOS: " + ", ".join(str(l) for l in calc_lexer.lineas_error_lexico))
         print("TOTAL DE ERRORES SINTACTICOS: " + str(errores))
         if errores > 0:
             print("LINEAS CON ERRORES SINTACTICOS: " + ", ".join(str(l) for l in lineas_error))

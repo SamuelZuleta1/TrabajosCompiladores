@@ -1,9 +1,6 @@
 import ply.lex as lex
 import sys
 
-errores_lexicos = 0
-lineas_error_lexico = []
-
 tokens = (
     'SQRT',
     'EXP',
@@ -99,9 +96,6 @@ def t_E(t):
 
 def t_bad_ID(t):
     r'\d+[a-zA-Z_][a-zA-Z0-9_]*'
-    global errores_lexicos
-    errores_lexicos += 1
-    lineas_error_lexico.append(t.lexer.lineno)
     print ("Lexical error: identificador invalido '" + t.value + "' en linea " + str(t.lexer.lineno))
 
 def t_NUMBER(t):
@@ -141,9 +135,6 @@ def t_comments(t):
 
 def t_comments_unclosed(t):
     r'/\*(.|\n)*'
-    global errores_lexicos
-    errores_lexicos += 1
-    lineas_error_lexico.append(t.lexer.lineno)
     print ("Lexical error: comentario sin cerrar en linea " + str(t.lexer.lineno))
     t.lexer.lineno += t.value.count('\n')
 
@@ -151,10 +142,7 @@ def t_comments_C99(t):
     r'//.*'
 
 def t_error(t):
-    global errores_lexicos
-    errores_lexicos += 1
-    lineas_error_lexico.append(t.lexer.lineno)
-    print ("Lexical error: '" + str(t.value[0]) + "' en linea " + str(t.lexer.lineno))
+    print ("Lexical error: " + str(t.value[0]))
     t.lexer.skip(1)
 
 def test(data, lexer):
